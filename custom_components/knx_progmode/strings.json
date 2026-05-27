@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "KNX Programming Mode Watcher",
+        "description": "Reuses Home Assistant's KNX integration to detect devices in programming mode. Scanning is off by default — turn on the 'KNX Programming Mode Scanning' switch when you want to scan."
+      }
+    },
+    "abort": {
+      "already_configured": "KNX Programming Mode Watcher is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Scan settings",
+        "data": {
+          "timeout": "Scan window (seconds)",
+          "interval": "Idle gap between scans (seconds)",
+          "identify": "Read mask / vendor / order / serial when a device enters programming mode"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "devices_in_programming_mode": { "name": "Devices in programming mode" }
+    },
+    "binary_sensor": {
+      "programming_mode_active": { "name": "Programming mode active" }
+    },
+    "switch": {
+      "scanning": { "name": "Scanning" }
+    }
+  }
+}
