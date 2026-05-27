@@ -9,6 +9,7 @@ import asyncio
 from typing import Any
 
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.util import dt as dt_util
 from xknx import XKNX
@@ -17,6 +18,7 @@ from xknx.profile import ResourceGenericPropertyId
 from xknx.telegram import IndividualAddress, apci
 
 from .const import (
+    DOMAIN,
     EVENT_ENTERED,
     EVENT_LEFT,
     LOGGER,
@@ -24,6 +26,17 @@ from .const import (
     MASK_VERSIONS,
     SIGNAL_UPDATE,
 )
+
+
+def build_device_info(entry_id: str) -> DeviceInfo:
+    """Single hub-style device that owns every entity in this integration."""
+    return DeviceInfo(
+        identifiers={(DOMAIN, entry_id)},
+        name="KNX Programming Mode Watcher",
+        manufacturer="ha-knx-progmode",
+        model="Bus scanner",
+        entry_type=DeviceEntryType.SERVICE,
+    )
 
 
 def _describe_mask(mask: int | None) -> str | None:

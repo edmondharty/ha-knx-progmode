@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.restore_state import RestoreEntity
 
 from .const import DEFAULT_SCAN_ENABLED, DOMAIN, SIGNAL_UPDATE
-from .coordinator import KnxProgmodeScanner
+from .coordinator import KnxProgmodeScanner, build_device_info
 
 
 async def async_setup_entry(
@@ -32,6 +32,7 @@ class KnxProgmodeScanSwitch(SwitchEntity, RestoreEntity):
     def __init__(self, scanner: KnxProgmodeScanner, entry_id: str) -> None:
         self._scanner = scanner
         self._attr_unique_id = f"{entry_id}_scan_enabled"
+        self._attr_device_info = build_device_info(entry_id)
 
     async def async_added_to_hass(self) -> None:
         last = await self.async_get_last_state()
